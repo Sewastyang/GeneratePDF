@@ -1,0 +1,51 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'com.bmuschko.docker-java-application'
+apply plugin: 'com.bmuschko.docker-remote-api'
+
+import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
+
+mainClassName = 'Main'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:3.0.7'
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile group: 'org.apache.xmlgraphics', name: 'fop', version: '2.3'
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.3.4'
+//Thanks for using https://jar-download.com
+// https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.0.6'
+
+}
+
+docker {
+    javaApplication {
+        maintainer = 'Zolotukhin Sergey'
+        baseImage = 'openjdk:latest'
+        ports = [8080]
+        tag = 'GeneratePDF'
+    }
+}
+
+task createDocker(type: DockerCreateContainer, dependsOn: dockerBuildImage) {
+    targetImageId { dockerBuildImage.getImageId() }
+    portBindings = ['8080:8080']
+}
+
+task runDocker(type: DockerStartContainer, dependsOn: createDocker) {
+    targetContainerId { createDocker.containerId }
+}
