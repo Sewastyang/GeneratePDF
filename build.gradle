@@ -13,7 +13,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.bmuschko:gradle-docker-plugin:3.0.7'
+        classpath 'com.bmuschko:gradle-docker-plugin:3.2.1'
     }
 }
 
@@ -29,6 +29,7 @@ dependencies {
 //Thanks for using https://jar-download.com
 // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
     compile group: 'com.itextpdf', name: 'itextpdf', version: '5.0.6'
+    
 
 }
 
@@ -37,7 +38,7 @@ docker {
         maintainer = 'Zolotukhin Sergey'
         baseImage = 'openjdk:latest'
         ports = [8080]
-        tag = 'GeneratePDF'
+        tag = 'generatepdf'
     }
 }
 

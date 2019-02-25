@@ -1,8 +1,6 @@
 package generatepack;
 
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.parser.PdfTextExtractor;
-import jdk.internal.util.xml.impl.XMLWriter;
+
 import org.apache.fop.apps.*;
 
 import javax.xml.transform.Result;
